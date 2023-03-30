@@ -6,12 +6,13 @@ export abstract class  Clase_abs {
     private cantidad: number;
     private medida: Medida;
 
-    constructor() {
-        this.nombre = "Pizza a la Prusci"
-        this.descripcion = "con Espinaca y Salsa Blanca"
-        this.cantidad = 1
-        this.medida = Medida.UNIDAD
-    }
+
+    constructor(n: String, d: String, c: number, m: Medida) {
+        this.nombre = n
+        this.descripcion = d
+        this.cantidad = c
+        this.medida = m
+    }    
 
 
     public getNombre(): String {
@@ -47,8 +48,14 @@ export abstract class  Clase_abs {
     }
 
 
-  
+    public devolverMedida(): String {
+        if(this.getMedida() == 0)
+            return "LITRO"
+        else if (this.getMedida() == 1)
+            return "GRAMO"
+        else 
+            return "UNIDAD"
+    }
 
- 
-
+    //public abstract mostrarRecetaCompleta(): void;
 }
