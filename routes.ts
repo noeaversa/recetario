@@ -28,4 +28,8 @@ export const init = (app: Application, receta: Controller) => {
         receta.borrarElemento(req.body.receta)
         res.send(receta)
     })
+
+    app.put('/', (req, res) => {
+        
+    })
 }
