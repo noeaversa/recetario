@@ -1,5 +1,5 @@
-import { Clase_com } from "./clase_com";
-import { Clase_sim } from "./clase_sim";
+import { Clase_com } from "./classes/clase_com";
+import { Clase_sim } from "./classes/clase_sim";
 import express from 'express';
 
 
@@ -24,6 +24,15 @@ app.set('view engine', 'ejs');
 
 app.get('/', (req, res) => {
     res.send(pizza_a_la_prusci)
+})
+
+app.get('/receta/:id', (req, res) => {
+
+})
+
+app.post('/', (req, res) => {
+    req.body.receta
+    res.send(req.body.receta)
 })
 
 app.listen(9090);

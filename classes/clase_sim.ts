@@ -1,5 +1,5 @@
 import { Clase_abs } from "./clase_abs";
-import { Medida } from "./medida"
+import { Medida } from "../medida"
 
 export class Clase_sim extends Clase_abs{
     constructor(n: String, d: String, c: number, m: Medida) {

@@ -1,5 +1,5 @@
 import { Clase_abs } from "./clase_abs";
-import { Medida } from "./medida"
+import { Medida } from "../medida"
 
 export class Clase_com extends Clase_abs{
     private hijo: Clase_abs[]
