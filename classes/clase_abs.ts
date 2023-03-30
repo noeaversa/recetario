@@ -1,4 +1,4 @@
-import { Medida } from "../medida";
+import { Medida } from "./medida";
 
 export abstract class  Clase_abs {
     private nombre: String;
