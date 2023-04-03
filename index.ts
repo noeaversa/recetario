@@ -4,6 +4,7 @@ import express from 'express';
 import * as Server from "./server"
 import { Controller } from "./classes/controller";
 
+
 let controller : Controller = new Controller()
 const agua: Clase_sim = new Clase_sim("agua", "-", 500, 0)
 controller.addHijo(agua)
