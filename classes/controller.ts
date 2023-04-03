@@ -1,36 +1,48 @@
+import { Clase_abs } from "./clase_abs";
 import { Clase_com } from "./clase_com";
-import { Clase_sim } from "./clase_sim";
-
 export class Controller{
-    private recetas : Clase_com[]
+    private recetas : Clase_abs[]
 
       constructor(){
         this.recetas = []
     }
 
-    public getHijos(): Clase_com[] {
+    public getRecetas(): Clase_abs[] {
         return this.recetas;
     }
 
-    public setHijos(hijos: Clase_com[]): void {
-        this.recetas = hijos;
+    public getRecetasPorNombre(nombre : String): Clase_abs | null {
+   
+        let receta_a_cambiar = this.recetas.find(receta_a_cambiar => {
+            return receta_a_cambiar.getNombre() == nombre
+        })
+        if (receta_a_cambiar)
+            return receta_a_cambiar
+        return null;
     }
 
-    public addHijo(hijoAgregar: Clase_com): void{
+    public setRecetas(receta: Clase_abs[]): void {
+        this.recetas = receta;
+    }
+
+    public addHijo(hijoAgregar: Clase_abs): void{
         this.recetas.push(hijoAgregar)
     }
 
-    public verificarHijo(receta_verificar_nombre: string) : boolean{
-        this.recetas.forEach(receta => {
-            if(receta_verificar_nombre == receta.getNombre())
-                return true
-        });
-        return false
-    }
-
-    public borrarElemento(receta: Clase_com): void{
+    public borrarElemento(receta: Clase_abs): void{
         let index : number = this.recetas.indexOf(receta)
         this.recetas.splice(index, 1)
+    }
+
+    public modificarElemento(receta_cambiada: Clase_abs) : void {
+        let receta_a_cambiar = this.recetas.find(receta_a_cambiar => {
+            return receta_a_cambiar.getNombre() == receta_cambiada.getNombre()
+        })
+        if (receta_a_cambiar){
+            let index : number = this.recetas.indexOf(receta_a_cambiar)
+            this.recetas[index] = receta_a_cambiar
+        }
+
     }
 
     /*

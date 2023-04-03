@@ -6,6 +6,7 @@ import { Controller } from "./classes/controller";
 
 let controller : Controller = new Controller()
 const agua: Clase_sim = new Clase_sim("agua", "-", 500, 0)
+controller.addHijo(agua)
 const harina: Clase_sim = new Clase_sim("harina", "-", 500, 1)
 const sal: Clase_sim = new Clase_sim("sal", "-", 1, 1)
 

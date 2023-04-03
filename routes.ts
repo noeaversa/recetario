@@ -10,15 +10,10 @@ export const init = (app: Application, receta: Controller) => {
     })
 
     app.get('/recetas/:nombre', (req, res) => {
-        let receta_recibida = req.params
-        if(receta.verificarHijo(receta_recibida.nombre)){
-            console.log(receta_recibida)
-        }
-        else
-            console.log("No se")
+        let receta_recibida = receta.getRecetasPorNombre(req.params.nombre)
+        res.send(receta_recibida)
     })
 
-    
     app.post('/', (req, res) => {
         receta.addHijo(req.body.receta)
         res.json(req.body.receta)
@@ -30,6 +25,7 @@ export const init = (app: Application, receta: Controller) => {
     })
 
     app.put('/', (req, res) => {
-        
+        receta.modificarElemento(req.body.receta)
+        res.send(receta)
     })
 }
