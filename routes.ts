@@ -3,13 +3,16 @@ import { Clase_sim } from "./classes/clase_sim";
 import { Application } from "express"
 import { Controller } from "./classes/controller";
 
+import * as bodyParser from "body-parser";
+import * as express from "express";
+
 
 export const init = (app: Application, receta: Controller) => {
     app.get('/', (req, res) => {
         res.send(receta)
     })
 
-    app.get('/recetas/:nombre', (req, res) => {
+    app.get('/:nombre', (req, res) => {
         let receta_recibida = receta.getRecetasPorNombre(req.params.nombre)
         res.send(receta_recibida)
     })
@@ -19,13 +22,15 @@ export const init = (app: Application, receta: Controller) => {
         res.json(req.body.receta)
     })
 
-    app.delete('/', (req, res) => {
-        receta.borrarElemento(req.body.receta)
+    app.delete('/:nombre', (req, res) => {
+        let receta_recibida = receta.getRecetasPorNombre(req.params.nombre)
+        if(receta_recibida !== null)
+            receta.borrarElemento(receta_recibida);
         res.send(receta)
     })
 
     app.put('/', (req, res) => {
         receta.modificarElemento(req.body.receta)
-        res.send(receta)
+        res.send()
     })
 }

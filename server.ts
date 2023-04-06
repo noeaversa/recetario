@@ -3,31 +3,19 @@ import { Clase_sim } from "./classes/clase_sim";
 import express from 'express';
 import { Controller } from "./classes/controller";
 import * as routes from "./routes"
-import swaggerJSDoc from "swagger-jsdoc";
-import swaggerUi from "swagger-ui-express"
+import swaggerUi from "swagger-ui-express";
+import swaggerSetup from "./Swagger";
+
+import yaml from "yaml";
+import fs from "fs";
+
 
 export const start = (puerto: number, receta: Controller) => {
     const app = express();
+    const file = fs.readFileSync(`${__dirname}/swagger.yaml`, "utf8");
+    const swaggerDocument = yaml.parse(file);
 
-    const options = {
-        definition: {
-          openapi: "3.0.1",
-          info: {
-            title: "REST API for Swagger Documentation",
-            version: "1.0.0",
-          },
-          schemes: ["http", "https"],
-          servers: [{ url: "http://localhost:9090/" }],
-        },
-        apis: [
-          `${__dirname}/routes/example-route.ts`,
-          "./dist/routes/example-route.js",
-        ],
-      };
-
-    const swaggerSpec = swaggerJSDoc(options);
-
-    app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+    app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(Object.assign(swaggerSetup, swaggerDocument)));
     app.use(express.json());
     app.use(express.urlencoded({extended:true}));
     app.set('view engine', 'ejs');

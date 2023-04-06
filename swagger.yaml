@@ -1,0 +1,150 @@
+openapi: 3.0.1
+info: 
+  title: API de Recetas
+  description: API que maneja informacion de recetas
+  version: 1.0.0
+
+servers:
+- url: "http://localhost:9090/"
+  
+tags:
+- name: receta
+  description: Endpoint maneja todo la info de recetas
+      
+paths:
+  /:
+    post:
+      tags:
+      - receta
+      summary: Inserta la info de una nueva receta
+      requestBody:
+        description: Crear Receta
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Recetas' 
+        required: true
+      responses:
+        200:
+          description: todo ok
+        400:
+          description: TODO MAL, ERRORRRR 101010010101010101010910920910
+        401:
+          $ref: '#/components/responses/NotFound'
+    
+    get:
+      tags:
+      - receta
+      summary: Obtiene todas las recetas
+    
+      responses:
+        200:
+          description: todo ok!
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Recetas'
+        400:
+          description: TODO MAL, ERRORRRR 101010010101010101010910920910
+        401:
+          $ref: '#/components/responses/NotFound'
+    
+    put:
+      tags:
+      - receta
+      summary: Modifica recetas
+      
+      responses:
+        200:
+          description: todo ok!
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Recetas'
+        400:
+          description: TODO MAL, ERRORRRR 101010010101010101010910920910
+        401:
+          $ref: '#/components/responses/NotFound'
+    
+  /{NombreReceta}:
+    get:
+      tags:
+      - receta
+      summary: Obtiene toda la info de una receta en especifica
+      parameters:
+      - name: NombreReceta
+        in: path
+        description: Nombre de la receta 
+        required: true
+        schema:
+          type: string
+          
+      responses:
+        200:
+          description: todo ok!
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Recetas'
+        400:
+          description: TODO MAL, ERRORRRR 101010010101010101010910920910
+        401:
+          $ref: '#/components/responses/NotFound'
+
+    delete:
+      tags:
+      - receta
+      summary: Elimina una receta
+      parameters:
+      - name: NombreReceta
+        in: path
+        description: Nombre de la receta 
+        required: true
+        schema:
+          type: string
+          
+      responses:
+        200:
+          description: todo ok!
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Recetas'
+        400:
+          description: TODO MAL, ERRORRRR 101010010101010101010910920910
+        401:
+          $ref: '#/components/responses/NotFound'
+      
+     
+components: 
+  responses:
+    NotFound:
+      description: Not found :(
+    
+  parameters:
+      token:
+        in: header
+        name: nombre
+        description: Identificador.
+        required: true
+        schema: 
+          type: string
+      
+  schemas:
+    
+      Recetas:
+        type: object
+        properties:
+          nombre:
+            type: string
+            description: Nombre de la receta
+          descripcion:
+            type: string
+            description: Descripcion receta
+          cantidad:
+            type: number
+            description: cantidad que vamos a hacer en la receta
+          medida:
+            type: string
+            enum: ['LITRO', 'GRAMO', 'UNIDAD']
+            description: unidad, gramos o litros
