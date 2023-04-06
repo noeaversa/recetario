@@ -40,21 +40,16 @@ export class Clase_com extends Clase_abs{
         return this.hijo.length
     }
 
-    /*
-    public mostrarRecetaCompleta(): void {
-        console.log("Nombre: ", this.getNombre())
-        console.log("Descripcion: ", this.getDescripcion())
-        console.log("Cantidad: ", this.getCantidad(), " ", this.devolverMedida())
+    public listarRecetasLetraEspecificaEnID(letra_contenida: string): Clase_abs[] {
+        let lista: Clase_abs[] = []
+        this.hijo.forEach(hijo => {
+            if(hijo.getNombre().includes(letra_contenida)){
+                lista.push(hijo)
+            }
+        });
 
-            console.log("Ingredientes:")
-
-            this.hijo.forEach(function(valor){
-                console.log("Nombre: ", valor.getNombre())
-                console.log("Descripcion: ", valor.getDescripcion())
-                console.log("Cantidad: ", valor.getCantidad(), " ", valor.devolverMedida())
-            })
-        
-        console.log(this.pasos)
+        return lista
     }
-    */
+
+    
 }

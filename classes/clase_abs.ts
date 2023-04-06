@@ -57,5 +57,11 @@ export abstract class  Clase_abs {
             return "UNIDAD"
     }
 
-    //public abstract mostrarRecetaCompleta(): void;
+    public convertirLitroAGramo(): void{
+        if(this.getMedida() == 0){
+            let pasaje: number = this.getCantidad() * 1000
+            this.setCantidad(pasaje)
+            this.setMedida(1)
+        }
+    }
 }
