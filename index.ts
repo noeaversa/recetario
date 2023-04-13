@@ -3,7 +3,9 @@ import { Clase_sim } from "./classes/clase_sim";
 import express from 'express';
 import * as Server from "./server"
 import { Controller } from "./classes/controller";
+import * as dotenv from 'dotenv';
 
+dotenv.config()
 
 let controller : Controller = new Controller()
 const agua: Clase_sim = new Clase_sim("agua", "-", 500, 0)

@@ -2,8 +2,8 @@ import { Clase_abs } from "./clase_abs";
 import { Clase_com } from "./clase_com";
 export class Controller{
     private recetas : Clase_abs[]
-
-      constructor(){
+    
+    constructor(){
         this.recetas = []
     }
 
