@@ -2,14 +2,27 @@ import { Clase_com } from "./classes/clase_com";
 import { Clase_sim } from "./classes/clase_sim";
 import { Application } from "express"
 import { Controller } from "./classes/controller";
+import * as database_config from "./database/database_config";
 
 import * as bodyParser from "body-parser";
 import * as express from "express";
+import { Clase_abs } from "./classes/clase_abs";
 
-
+const conexion = database_config.connection;
 export const init = (app: Application, receta: Controller) => {
     app.get('/', (req, res) => {
-        res.send(receta)
+        const query = 'SELECT * FROM receta';
+        conexion.query(query, (err, results) => {
+            if(err) {
+                console.log('ERROR EN EL GET!')
+            }
+
+            const recetas = results.map((result: any) => {
+                return new Clase_sim(result.nombre, result.descripcion, result.cantidad, result.medida)
+            })
+            res.send(recetas)    
+        })
+            
     })
 
     app.get('/:nombre', (req, res) => {
