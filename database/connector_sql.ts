@@ -1,17 +1,17 @@
 import { createPool, Pool} from 'mysql';
-import { DATA_SOURCES } from './script/database';
-const dataSource = DATA_SOURCES.mySqlDataSource;
+import { database } from './database_config'
+const dataSource = database.DataSource;
 
-let pool: Pool; -- Pool deja la conexion a la bd abierta, es decir, que tenes la base cuando quieras ya corriendo
+let pool: Pool; //Pool deja la conexion a la bd abierta, es decir, que tenes la base cuando quieras ya corriendo
 
 
 export const init = () => {
   try {
     pool = createPool({
-      host: dataSource.DB_HOST,
-      user: dataSource.DB_USER,
-      password: dataSource.DB_PASSWORD,
-      database: dataSource.DB_DATABASE,
+      host: dataSource.db_host,
+      user: dataSource.db_user,
+      password: dataSource.db_password,
+      database: dataSource.db_database,
     });
 
     console.debug('MySql generated successfully');

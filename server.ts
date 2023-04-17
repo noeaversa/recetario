@@ -4,7 +4,8 @@ import express from 'express';
 import { Controller } from "./classes/controller";
 import * as routes from "./routes"
 import swaggerUi from "swagger-ui-express";
-import swaggerSetup from "./Swagger";
+import swaggerSetup from "./Swagger/Swagger";
+import * as MySQLConnector from './database/connector_sql';
 
 import yaml from "yaml";
 import fs from "fs";
@@ -12,8 +13,10 @@ import fs from "fs";
 
 export const start = (puerto: number, receta: Controller) => {
     const app = express();
-    const file = fs.readFileSync(`${__dirname}/swagger.yaml`, "utf8");
+    const file = fs.readFileSync(`${__dirname}/Swagger/swagger.yaml`, "utf8");
     const swaggerDocument = yaml.parse(file);
+
+    MySQLConnector.init();
 
     app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(Object.assign(swaggerSetup, swaggerDocument)));
     app.use(express.json());
