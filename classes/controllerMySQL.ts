@@ -1,3 +1,2 @@
-export interface ControllerMySQL{
+import { Request, RequestHandler, Response  } from "express";
 
-}

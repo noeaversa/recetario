@@ -5,7 +5,8 @@ import { Controller } from "./classes/controller";
 import * as routes from "./routes"
 import swaggerUi from "swagger-ui-express";
 import swaggerSetup from "./Swagger/Swagger";
-import * as MySQLConnector from './database/connector_sql';
+import { Connection } from "mysql";
+import * as database_config from "./database/database_config"
 
 import yaml from "yaml";
 import fs from "fs";
@@ -16,7 +17,15 @@ export const start = (puerto: number, receta: Controller) => {
     const file = fs.readFileSync(`${__dirname}/Swagger/swagger.yaml`, "utf8");
     const swaggerDocument = yaml.parse(file);
 
-    MySQLConnector.init();
+    database_config.connection.connect((err) => {
+        if (err) {
+          console.error('Error al conectar a la base de datos: ', err);
+          return;
+        }
+      
+        console.log('Conexión a la base de datos exitosa');
+      });
+      
 
     app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(Object.assign(swaggerSetup, swaggerDocument)));
     app.use(express.json());
