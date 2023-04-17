@@ -7,6 +7,7 @@ import * as database_config from "./database/database_config";
 import * as bodyParser from "body-parser";
 import * as express from "express";
 import { Clase_abs } from "./classes/clase_abs";
+import { resolveModuleNameFromCache } from "typescript";
 
 const conexion = database_config.connection;
 export const init = (app: Application, receta: Controller) => {
@@ -18,7 +19,13 @@ export const init = (app: Application, receta: Controller) => {
             }
 
             const recetas = results.map((result: any) => {
-                return new Clase_sim(result.nombre, result.descripcion, result.cantidad, result.medida)
+                const queryComprobarQueEs = 'SELECT * FROM receta where ' + result.nombre + ' = nombre1';
+                if(err){
+                    return new Clase_sim(result.nombre, result.descripcion, result.cantidad, result.medida)     
+                } 
+                else {
+                    return new Clase_com(result.nombre, result.descripcion, result.cantidad, result.medida, [])
+                }
             })
             res.send(recetas)    
         })
