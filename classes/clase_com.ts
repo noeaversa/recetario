@@ -5,7 +5,7 @@ export class Clase_com extends Clase_abs{
     private hijo: Clase_abs[]
     private pasos: string[]
 
-    constructor(n: String, d: String, c: number, m: Medida, pasos: String[]){
+    constructor(n: string, d: string, c: number, m: Medida, pasos: String[]){
         super(n, d, c, m)
         this.hijo = []
         this.pasos = []

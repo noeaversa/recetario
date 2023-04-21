@@ -12,7 +12,7 @@ tags:
   description: Endpoint maneja todo la info de recetas
       
 paths:
-  /:
+  /recetas:
     post:
       tags:
       - receta
@@ -49,24 +49,8 @@ paths:
         401:
           $ref: '#/components/responses/NotFound'
     
-    put:
-      tags:
-      - receta
-      summary: Modifica recetas
-      
-      responses:
-        200:
-          description: todo ok!
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Recetas'
-        400:
-          description: TODO MAL, ERRORRRR 101010010101010101010910920910
-        401:
-          $ref: '#/components/responses/NotFound'
     
-  /{NombreReceta}:
+  /recetas/{NombreReceta}:
     get:
       tags:
       - receta
@@ -115,6 +99,39 @@ paths:
         401:
           $ref: '#/components/responses/NotFound'
       
+    put:
+      tags:
+      - receta
+      summary: Modifica recetas
+      
+      responses:
+        200:
+          description: todo ok!
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Recetas'
+        400:
+          description: TODO MAL, ERRORRRR 101010010101010101010910920910
+        401:
+          $ref: '#/components/responses/NotFound'
+
+    patch:
+      tags:
+      - receta
+      summary: Modifica campo especifico de una receta
+      
+      responses:
+        200:
+          description: todo ok!
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Recetas'
+        400:
+          description: TODO MAL, ERRORRRR 101010010101010101010910920910
+        401:
+          $ref: '#/components/responses/NotFound'
      
 components: 
   responses:

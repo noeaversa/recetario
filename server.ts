@@ -6,6 +6,7 @@ import * as routes from "./routes"
 import swaggerUi from "swagger-ui-express";
 import swaggerSetup from "./Swagger/Swagger";
 import { Connection } from "mysql";
+import { RecetaControllerMYSQL } from "./classes/RecetaMysql";
 import * as database_config from "./database/database_config"
 
 import yaml from "yaml";
@@ -35,5 +36,5 @@ export const start = (puerto: number, receta: Controller) => {
     app.listen(puerto);
     console.log("Server is listening on port 9090")
 
-    routes.init(app, receta)
+    routes.init(app, RecetaControllerMYSQL)
 }

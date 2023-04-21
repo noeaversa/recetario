@@ -1,13 +1,13 @@
 import { Medida } from "./medida";
 
 export abstract class  Clase_abs {
-    private nombre: String;
-    private descripcion: String;
+    private nombre: string;
+    private descripcion: string;
     private cantidad: number;
     private medida: Medida;
 
 
-    constructor(n: String, d: String, c: number, m: Medida) {
+    constructor(n: string, d: string, c: number, m: Medida) {
         this.nombre = n
         this.descripcion = d
         this.cantidad = c
@@ -15,19 +15,19 @@ export abstract class  Clase_abs {
     }    
 
 
-    public getNombre(): String {
+    public getNombre(): string {
         return this.nombre;
     }
 
-    public setNombre(nombre: String): void {
+    public setNombre(nombre: string): void {
         this.nombre = nombre;
     }
 
-    public getDescripcion(): String {
+    public getDescripcion(): string {
         return this.descripcion;
     }
 
-    public setDescripcion(descripcion: String): void {
+    public setDescripcion(descripcion: string): void {
         this.descripcion = descripcion;
     }
 

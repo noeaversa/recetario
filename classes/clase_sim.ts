@@ -2,7 +2,7 @@ import { Clase_abs } from "./clase_abs";
 import { Medida } from "./medida"
 
 export class Clase_sim extends Clase_abs{
-    constructor(n: String, d: String, c: number, m: Medida) {
+    constructor(n: string, d: string, c: number, m: Medida) {
         super(n, d, c, m)
     }
 
