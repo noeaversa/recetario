@@ -12,32 +12,50 @@ const conexion = database_config.connection;
 
 export const init = (app: Application, recetaMYSQL: RecetaControllerMYSQL) => {
     app.get('/recetas', (req, res) => {
-        const recetas = RecetaControllerMYSQL.obtenerTodasLasRecetas();
-        res.send(recetas)        
+        RecetaControllerMYSQL.obtenerTodasLasRecetas().then((recetas: Clase_com) => {
+            res.send(recetas)
+        }).catch((err) => {
+            res.status(500).send();
+        })     
     })
 
     app.get('/recetas/:nombre', (req, res) => {
-        const receta = RecetaControllerMYSQL.obtenerRecetaEspecifica(req.params.nombre)
+        RecetaControllerMYSQL.obtenerRecetaEspecifica(req.params.nombre).then((recetas: Clase_sim) => {
+            res.send(recetas)
+        }).catch((err) => {
+            res.status(500).send();
+        }) 
     })
 
     app.post('/recetas', (req, res) => {
-        const receta_agregada = RecetaControllerMYSQL.agregarNuevaReceta(req.body.nombre, req.body.descripcion, req.body.cantidad, req.body.medida);
-        res.send(receta_agregada)
+        RecetaControllerMYSQL.agregarNuevaReceta(req.body.nombre, req.body.descripcion, req.body.cantidad, req.body.medida).then((recetas: Clase_sim) => {
+            res.send(recetas)
+        }).catch((err) => {
+            res.status(500).send();
+        }) 
     })
 
     app.delete('/recetas/:nombre', (req, res) => {
-        const receta_eliminada = RecetaControllerMYSQL.eliminarReceta(req.params.nombre)
-        res.send(receta_eliminada)
+        RecetaControllerMYSQL.eliminarReceta(req.params.nombre).then((recetas: Clase_sim) => {
+            res.send(recetas)
+        }).catch((err) => {
+            res.status(500).send();
+        }) 
     })
 
     app.put('/recetas/:nombre', (req, res) => {
-        const receta_modificada = RecetaControllerMYSQL.modificarRecetaCompleta(req.params.nombre, req.body.descripcion, req.body.cantidad, req.body.medida);
-        res.send(receta_modificada)
-        
+        RecetaControllerMYSQL.modificarRecetaCompleta(req.params.nombre, req.body.descripcion, req.body.cantidad, req.body.medida).then((recetas: Clase_sim) => {
+            res.send(recetas)
+        }).catch((err) => {
+            res.status(500).send();
+        }) ;        
     })
 
     app.patch('/recetas/:nombre', (req, res) => {
-       let receta_modificada = RecetaControllerMYSQL.modificarCampoReceta(req.params.nombre, req.body.descripcion, req.body.cantidad, req.body.medida);
-       res.send(receta_modificada)
+       RecetaControllerMYSQL.modificarCampoReceta(req.params.nombre, req.body.descripcion, req.body.cantidad, req.body.medida).then((recetas: Clase_sim) => {
+            res.send(recetas)
+        }).catch((err) => {
+            res.status(500).send();
+        });
     }) 
 }
