@@ -2,6 +2,11 @@ export class Usuario{
     private usuario: string;
     private contraseñaHasheada: string;
 
+    constructor(u, c){
+        this.usuario = u;
+        this.contraseñaHasheada = c;
+    }
+
     public getUsuario(): string {
         return this.usuario;
     }

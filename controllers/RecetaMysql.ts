@@ -1,6 +1,7 @@
 import { Clase_com } from "../classes/clase_com";
 import { Clase_sim } from "../classes/clase_sim";
 import { Medida } from "../classes/medida";
+import { Usuario } from "../classes/usuario";
 import { connection } from "../database/database_config";
 
 export class RecetaControllerMYSQL {
