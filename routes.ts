@@ -1,12 +1,12 @@
 import { Clase_com } from "./classes/clase_com";
 import { Clase_sim } from "./classes/clase_sim";
 import { Application } from "express"
-import { Controller } from "./classes/controller";
+import { Controller } from "./controllers/controller";
 import * as database_config from "./database/database_config";
 
 import * as express from "express";
 import { Clase_abs } from "./classes/clase_abs";
-import { RecetaControllerMYSQL } from "./classes/RecetaMysql";
+import { RecetaControllerMYSQL } from "./controllers/RecetaMysql";
 
 const conexion = database_config.connection;
 
@@ -36,8 +36,13 @@ export const init = (app: Application, recetaMYSQL: RecetaControllerMYSQL) => {
     })
 
     app.delete('/recetas/:nombre', (req, res) => {
-        RecetaControllerMYSQL.eliminarReceta(req.params.nombre).then((recetas: Clase_sim) => {
-            res.send(recetas)
+        RecetaControllerMYSQL.eliminarReceta(req.params.nombre).then((result: any) => {
+            if(!result){
+                res.status(404).send();
+            }
+            else{
+                res.send(result)
+            }
         }).catch((err) => {
             res.status(500).send();
         }) 

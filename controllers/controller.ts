@@ -1,5 +1,5 @@
-import { Clase_abs } from "./clase_abs";
-import { Clase_com } from "./clase_com";
+import { Clase_abs } from "../classes/clase_abs";
+import { Clase_com } from "../classes/clase_com";
 export class Controller{
     private recetas : Clase_abs[]
     

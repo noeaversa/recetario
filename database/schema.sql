@@ -19,4 +19,8 @@ create table pasos(idPaso int,
                 orden int,
                 foreign key(nombreReceta) references receta(nombre));
 
+create table usuario(nombre_usuario varchar(80),
+					contraseña varchar(20),
+					primary key(nombre_usuario));
+
 -- drop database recetario;

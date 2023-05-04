@@ -1,6 +1,6 @@
-import { Clase_com } from "./clase_com";
-import { Clase_sim } from "./clase_sim";
-import { Medida } from "./medida";
+import { Clase_com } from "../classes/clase_com";
+import { Clase_sim } from "../classes/clase_sim";
+import { Medida } from "../classes/medida";
 import { connection } from "../database/database_config";
 
 export class RecetaControllerMYSQL {
@@ -39,24 +39,31 @@ export class RecetaControllerMYSQL {
             let valores_a_agregar = ["'" + nombre + "'", "'" + descripcion + "'", cantidad, "'" + medida + "'"];
             const consulta = 'insert into receta (nombre, descripcion, cantidad, medida) values (' + valores_a_agregar + ')';
             connection.query(consulta, (err, results) => {
-                if(err)
+                if(err){
                     reject(err);
+                }
+                    
                 else{
-                    resolve(this.obtenerTodasLasRecetas()); //con esto ves si se posteo todo ok
+                    resolve(this.obtenerRecetaEspecifica(nombre)); //con esto ves si se posteo todo ok
                 }
             }); 
         })
     }
 
-    public static eliminarReceta(nombre: string): Promise<Clase_sim>{
+    public static eliminarReceta(nombre: string): Promise<any>{
         return new Promise((resolve, reject) => {
             const consulta = 'delete from receta where nombre = "' + nombre + '"';
 
             connection.query(consulta, (err, results) => {
-                if(err)
+                if(err){
                     reject(err)
+                }
                 else{
-                    resolve(this.obtenerTodasLasRecetas()) // sirve para ver si se elimino bien, osea que no tendria que aparecer aca :)
+                    if(results.affectedRows == 0){
+                        resolve(false)
+                    } else{   
+                        resolve(true)
+                    } // sirve para ver si se elimino bien, osea que no tendria que aparecer aca :)
                 }
             })
         })
