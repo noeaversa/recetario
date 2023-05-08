@@ -1,8 +1,8 @@
 export class Usuario{
-    private usuario: string;
-    private contraseñaHasheada: string;
+    private usuario: any;
+    private contraseñaHasheada: any;
 
-    constructor(u, c){
+    constructor(u:any, c:any){
         this.usuario = u;
         this.contraseñaHasheada = c;
     }

@@ -1,12 +1,12 @@
 import { Clase_com } from "./classes/clase_com";
 import { Clase_sim } from "./classes/clase_sim";
 import express from 'express';
-import { Controller } from "./classes/controller";
+import { Controller } from "./controllers/controller";
 import * as routes from "./routes"
 import swaggerUi from "swagger-ui-express";
 import swaggerSetup from "./Swagger/Swagger";
 import { Connection } from "mysql";
-import { RecetaControllerMYSQL } from "./classes/RecetaMysql";
+import { RecetaControllerMYSQL } from "./controllers/RecetaMysql";
 import * as database_config from "./database/database_config"
 
 import yaml from "yaml";

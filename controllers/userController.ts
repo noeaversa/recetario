@@ -1,13 +1,17 @@
 import { Usuario } from "../classes/usuario";
 import * as bcrypt from "bcrypt";
 import { connection } from "../database/database_config";
+import { BooleanLiteral } from "typescript";
 
 export class userController {
-    async verificarContraseña(nombre_usuario: string, contraseña: string): Promise<boolean>{
-        const contraseña_ingresada = await bcrypt.hash(contraseña, 20);  
-        const usuario = await userController.obtenerUser(nombre_usuario);
-        const coinciden_contraseñas = await bcrypt.compare(contraseña_ingresada, usuario.getContraseña());
-        return(coinciden_contraseñas)
+    public static verificarUsuario(nombre_usuario: string, contraseña: string): Promise<boolean>{
+        return new Promise((resolve, reject) => {
+            this.obtenerUser(nombre_usuario).then((user) => {
+                resolve(bcrypt.compare(contraseña, user.getContraseña()))
+            }).catch((err) =>{
+                reject(err)                
+            })      
+        })
     }
 
     public static obtenerUser(nombre_usuario: string): Promise<Usuario>{
@@ -17,31 +21,48 @@ export class userController {
                 if(err)
                     reject(err)
                 else{
-                    const usuarioObtenido = results
+                    const usuarioObtenido: Usuario = new Usuario(results[0].nombre_usuario, results[0].contraseña)
                     resolve(usuarioObtenido);
                 }
             })
         })
     }
-    public static agregarUsuarioDatabase(nombre: string, contraseña: string): Promise<Usuario>{
+
+    public static agregarUsuarioDatabase(nombre: string, contraseña: any): Promise<Usuario>{
         return new Promise((resolve, reject) => {
             let valores_a_agregar = ["'" + nombre + "'", "'" + contraseña + "'"];
             const consulta = 'insert into usuario (nombre_usuario, contraseña) values (' + valores_a_agregar + ')';
             connection.query(consulta, (err, results) => {
                 if(err){
                     reject(err);
-                }
-                else{
+                }else{
                     resolve(userController.obtenerUser(nombre)); //con esto ves si se posteo todo ok
                 }
             }); 
         })
     }
 
-    public static registroUser(nombre_usuario, contraseña_usuario): Promise<Usuario>{
+    public static registroUser(nombre_usuario:string, contraseña_usuario: string): Promise<Usuario>{
         return new Promise((resolve, reject) => {
-            const contraseña_hasheada = bcrypt.hash(contraseña_usuario, 20);
-            this.agregarUsuarioDatabase(nombre_usuario, contraseña_usuario).then()
+            bcrypt.hash(contraseña_usuario, 1).then((contraseña_hasheada)=>{
+                resolve(this.agregarUsuarioDatabase(nombre_usuario, contraseña_hasheada))
+            }).catch((err) =>{
+                reject(err)
+            });
         })
     } 
+
+    public static ingresoUser(nombre_usuario: string, contraseña_ingresada: string): Promise<Usuario>{
+        return new Promise((resolve, reject) => {
+            this.verificarUsuario(nombre_usuario, contraseña_ingresada).then((booleano) => {
+                if(!booleano)
+                    reject("no es correcta la contraseña");
+                else{
+                    resolve(this.obtenerUser(nombre_usuario))
+                }
+            }).catch((err) => {
+                reject(err);
+            })
+        })
+    }
 }
