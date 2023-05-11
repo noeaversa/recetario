@@ -29,15 +29,15 @@ export const init = (app: Application, recetaControllerMYSQL: RecetaControllerMY
         })
     })
     
-    app.get('/recetas', (req, res) => {
+    app.get('/recetas', userController.verifyToken,(req, res) => {
         RecetaControllerMYSQL.obtenerTodasLasRecetas().then((recetas: Clase_com) => {
             res.send(recetas)
         }).catch((err) => {
             res.status(500).send();
-        })     
+        })      
     })
 
-    app.get('/recetas/:nombre', (req, res) => {
+    app.get('/recetas/:nombre', userController.verifyToken, (req, res) => {
         RecetaControllerMYSQL.obtenerRecetaEspecifica(req.params.nombre).then((recetas: Clase_sim) => {
             res.send(recetas)
         }).catch((err) => {
@@ -45,7 +45,7 @@ export const init = (app: Application, recetaControllerMYSQL: RecetaControllerMY
         }) 
     })
 
-    app.post('/recetas', (req, res) => {
+    app.post('/recetas', userController.verifyToken, (req, res) => {
         RecetaControllerMYSQL.agregarNuevaReceta(req.body.nombre, req.body.descripcion, req.body.cantidad, req.body.medida).then((recetas: Clase_sim) => {
             res.send(recetas)
         }).catch((err) => {
@@ -53,7 +53,7 @@ export const init = (app: Application, recetaControllerMYSQL: RecetaControllerMY
         }) 
     })
 
-    app.delete('/recetas/:nombre', (req, res) => {
+    app.delete('/recetas/:nombre', userController.verifyToken, (req, res) => {
         RecetaControllerMYSQL.eliminarReceta(req.params.nombre).then((result: any) => {
             if(!result){
                 res.status(404).send();
@@ -66,7 +66,7 @@ export const init = (app: Application, recetaControllerMYSQL: RecetaControllerMY
         }) 
     })
 
-    app.put('/recetas/:nombre', (req, res) => {
+    app.put('/recetas/:nombre', userController.verifyToken, (req, res) => {
         RecetaControllerMYSQL.modificarRecetaCompleta(req.params.nombre, req.body.descripcion, req.body.cantidad, req.body.medida).then((recetas: Clase_sim) => {
             res.send(recetas)
         }).catch((err) => {
@@ -74,7 +74,7 @@ export const init = (app: Application, recetaControllerMYSQL: RecetaControllerMY
         }) ;        
     })
 
-    app.patch('/recetas/:nombre', (req, res) => {
+    app.patch('/recetas/:nombre', userController.verifyToken, (req, res) => {
        RecetaControllerMYSQL.modificarCampoReceta(req.params.nombre, req.body.descripcion, req.body.cantidad, req.body.medida).then((recetas: Clase_sim) => {
             res.send(recetas)
         }).catch((err) => {

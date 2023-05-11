@@ -3,6 +3,7 @@ import * as bcrypt from "bcrypt";
 import { connection } from "../database/database_config";
 import { BooleanLiteral } from "typescript";
 import jwt from "jsonwebtoken";
+import { Parameter } from "swagger-jsdoc";
 
 export class userController {
     public static verificarUsuario(nombre_usuario: string, contraseña: string): Promise<boolean>{
@@ -53,7 +54,7 @@ export class userController {
         })
     } 
 
-    public static ingresoUser(nombre_usuario: string, contraseña_ingresada: string): Promise<{ usuario: Usuario, token: string }> {
+    public static ingresoUser(nombre_usuario: string, contraseña_ingresada: string): Promise<{ nombre_usuario: string, token: string }> {
         return new Promise((resolve, reject) => {
             this.verificarUsuario(nombre_usuario, contraseña_ingresada).then((booleano) => {
                 if (!booleano)
@@ -61,7 +62,7 @@ export class userController {
                 else {
                     this.obtenerUser(nombre_usuario).then((usuario) => {
                         const token = jwt.sign({ nombre_usuario }, 'secret_key');
-                        resolve({ usuario, token });
+                        resolve({ nombre_usuario, token });
                     }).catch((err) => {
                         reject(err);
                     })
@@ -72,4 +73,16 @@ export class userController {
         })
     }
     
+    public static verifyToken(req: any, res: any, next: any): Promise<any> {
+        return new Promise((resolve, results) => { 
+            const token_user = req.header('Authorization').replace('Bearer ', '');
+            try{
+                const decoded = jwt.verify(token_user, 'secret_key');
+            }
+            catch(err){
+                res.status(501).send();
+            }
+            return next();
+        })
+    }
 }
