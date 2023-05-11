@@ -30,7 +30,7 @@ export class userController {
         })
     }
 
-    public static agregarUsuarioDatabase(nombre: string, contraseña: any): Promise<Usuario>{
+    public static agregarUsuarioDatabase(nombre: string, contraseña: any): Promise<string>{
         return new Promise((resolve, reject) => {
             let valores_a_agregar = ["'" + nombre + "'", "'" + contraseña + "'"];
             const consulta = 'insert into usuario (nombre_usuario, contraseña) values (' + valores_a_agregar + ')';
@@ -38,13 +38,13 @@ export class userController {
                 if(err){
                     reject(err);
                 }else{
-                    resolve(userController.obtenerUser(nombre)); //con esto ves si se posteo todo ok
+                    resolve(nombre); //con esto ves si se posteo todo ok
                 }
             }); 
         })
     }
 
-    public static registroUser(nombre_usuario:string, contraseña_usuario: string): Promise<Usuario>{
+    public static registroUser(nombre_usuario:string, contraseña_usuario: string): Promise<string>{
         return new Promise((resolve, reject) => {
             bcrypt.hash(contraseña_usuario, 1).then((contraseña_hasheada)=>{
                 resolve(this.agregarUsuarioDatabase(nombre_usuario, contraseña_hasheada))
@@ -80,7 +80,7 @@ export class userController {
                 const decoded = jwt.verify(token_user, 'secret_key');
             }
             catch(err){
-                res.status(501).send();
+                res.status(404).send();
             }
             return next();
         })
