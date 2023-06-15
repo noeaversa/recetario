@@ -37,6 +37,14 @@ export const init = (app: Application, recetaControllerMYSQL: RecetaControllerMY
         })      
     })
 
+    app.get('/recetas/buscarLetra/:letra',  userController.verifyToken,(req, res) => {
+        RecetaControllerMYSQL.obtenerRecetaPorLetra(req.params.letra).then((recetas) => {
+            res.send(recetas)
+        }).catch((err) => {
+            res.status(500).send();
+        })      
+    });
+
     app.get('/recetas/:nombre', userController.verifyToken, (req, res) => {
         RecetaControllerMYSQL.obtenerRecetaEspecifica(req.params.nombre).then((recetas: Clase_sim) => {
             res.send(recetas)
