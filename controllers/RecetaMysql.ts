@@ -72,7 +72,7 @@ export class RecetaControllerMYSQL {
 
     public static obtenerRecetaPorLetra(letra: string){
         return new Promise((resolve, reject) => {
-            const consulta = 'select * from receta where nombre = "%' + letra + '"';
+            const consulta = 'select * from receta where nombre like "' + letra + '%"';
             connection.query(consulta, (err, results) => {
                 if(err)
                     reject(err)

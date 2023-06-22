@@ -55,7 +55,7 @@ export const init = (app: Application, recetaControllerMYSQL: RecetaControllerMY
 
     app.post('/recetas', userController.verifyToken, (req, res) => {
         RecetaControllerMYSQL.agregarNuevaReceta(req.body.nombre, req.body.descripcion, req.body.cantidad, req.body.medida).then((recetas: Clase_sim) => {
-            res.send(recetas)
+            res.send(rec
         }).catch((err) => {
             res.status(500).send();
         }) 
